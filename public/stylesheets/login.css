@@ -1,0 +1,10 @@
+.title {
+    text-align: center;
+    padding-top: 50px;
+    text-shadow: 1px 1px 3px #696969, 1px 1px 10px #808080, 1px 1px 13px #A9A9A9;
+    font-size: 50px;
+}
+
+.form-control {
+    border-color: #696969;
+}

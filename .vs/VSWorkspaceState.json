@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\middleware",
+    "\\models",
+    "\\public",
+    "\\public\\stylesheets",
+    "\\routes",
+    "\\views",
+    "\\views\\campgrounds",
+    "\\views\\comments",
+    "\\views\\partials"
+  ],
+  "SelectedNode": "\\app.js",
+  "PreviewInSolutionExplorer": false
+}

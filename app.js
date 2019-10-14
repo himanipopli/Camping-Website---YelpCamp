@@ -1,3 +1,4 @@
+//Start
 var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
@@ -232,3 +233,4 @@ app.get("/logout", function (req, res) {
 app.listen(3000, process.env.IP, function(){
    console.log("The YelpCamp Server Has Started!");
 });
+//End

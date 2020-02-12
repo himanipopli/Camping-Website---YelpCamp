@@ -7,19 +7,19 @@
     text-align:center;
     height:250px;
 }
-    .jumbotron h1 {
-        padding-bottom: 20px;
-        text-shadow: 2px 2px 0 #9627EB, 1px 1px 10px #808080, 1px 1px 13px #A9A9A9;
-        color: #fff;
-        font-size:50px;
-    }
-    .jumbotron .btn{
-        border-color:white;
-    }
+.jumbotron h1 {
+    padding-bottom: 20px;
+    text-shadow: 2px 2px 0 #9627EB, 1px 1px 10px #808080, 1px 1px 13px #A9A9A9;
+    color: #fff;
+    font-size:50px;
+}
+.jumbotron .btn{
+    border-color:white;
+}
 
-    .nav-link{
-        font-size:22px;
-    }
+.nav-link{
+    font-size:22px;
+}
 .navbar {
     padding: 0.1rem 1rem;
     background-image: radial-gradient(circle, #6a8ddc, #536dbb, #3e4e9b, #28317b, #12155c);
@@ -28,17 +28,17 @@
 
 }
 
-    .card-show{
-        margin:20px 0;
-    }
-        .card-show .card-img-top{
-            height:400px;
-        }
-        .card-show .card-title {
-            font-size: 30px;
-            text-shadow: 1px 1px 0 #9627EB, 1px 1px 5px #808080, 1px 1px 7px #A9A9A9;
-        }
-    .card-index .card-img-top{
-        height:200px;
-    }
+.card-show{
+    margin:20px 0;
+}
+.card-show .card-img-top{
+    height:400px;
+}
+.card-show .card-title {
+    font-size: 30px;
+    text-shadow: 1px 1px 0 #9627EB, 1px 1px 5px #808080, 1px 1px 7px #A9A9A9;
+}
+.card-index .card-img-top{
+    height:200px;
+}
     

@@ -9,13 +9,49 @@ var express = require("express"),
     User = require("./models/user"),
     session = require("express-session"),
     methodOverride = require("method-override"),
-    middleware = require("./middleware");
+    middleware = require("./middleware"),
+    multer = require("multer"),
+    path = require('path');
     
 mongoose.connect("mongodb://localhost/yelpcamp", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(methodOverride('_method'));
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+    destination: './public/uploads/',
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+// Init Upload
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 1000000 },
+    fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+    }
+}).single('image');
+
+// Check File Type
+function checkFileType(file, cb) {
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+        return cb(null, true);
+    } else {
+        cb('Error: Images Only!');
+    }
+}
+
 
 
 // PASSPORT CONFIGURATION
@@ -58,21 +94,32 @@ app.get("/campgrounds/new",middleware.isLoggedIn, function (req, res) {
 
 //add new campground to db
 app.post("/campgrounds", middleware.isLoggedIn, function (req, res) {
-    var name = req.body.name;
-    var image = req.body.image;
-    var desc = req.body.description;
-    var author = {
-        id: req.user._id,
-        username: req.user.username
-    }
-    var newCampground = { name: name, image: image, description: desc, author: author }
-    Campground.create(newCampground, function (err, newlyCreated) {
-        if (err) {
-            console.log(err);
+    upload(req, res, (error) => {
+        if (error) {
+            res.redirect('/campgrounds');
         } else {
-            res.redirect("/campgrounds");
+            console.log(req.file);
+            var fullPath = "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60";
+            if (req.file != undefined) {
+                fullPath = "uploads/" + req.file.filename;
+            }
+            var name = req.body.name;
+            var desc = req.body.description;
+            var author = {
+                id: req.user._id,
+                username: req.user.username
+            }
+            var newCampground = { name: name, image: fullPath, description: desc, author: author }
+            Campground.create(newCampground, function (err, newlyCreated) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.redirect("/campgrounds");
+                }
+            });
         }
-    });
+    });    
+    
 });
 // shows more info about one campground
 app.get("/campgrounds/:id", function (req, res) {
@@ -96,12 +143,23 @@ app.get("/campgrounds/:id/edit", middleware.checkUserCampground, function (req, 
 });
 
 app.put("/campgrounds/:id", function (req, res) {
-    var newData = { name: req.body.name, image: req.body.image, description: req.body.desc };
-    Campground.findByIdAndUpdate(req.params.id, { $set: newData }, function (err, campground) {
-        if (err) {
-            res.redirect("back");
+    upload(req, res, (error) => {
+        if (error) {
+            res.redirect('/campgrounds');
         } else {
-            res.redirect("/campgrounds/" + campground._id);
+            console.log(req.file);
+            var fullPath = "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60";
+            if (req.file != undefined) {
+                fullPath = "uploads/" + req.file.filename;
+            }
+            var newData = { name: req.body.name, image: fullPath, description: req.body.desc };
+            Campground.findByIdAndUpdate(req.params.id, { $set: newData }, function (err, campground) {
+                if (err) {
+                    res.redirect("back");
+                } else {
+                    res.redirect("/campgrounds/" + campground._id);
+                }
+            });
         }
     });
 });

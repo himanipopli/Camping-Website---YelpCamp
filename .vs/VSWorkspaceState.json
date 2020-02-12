@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\middleware",
     "\\models",
     "\\public",
     "\\public\\stylesheets",
-    "\\routes",
+    "\\public\\uploads",
     "\\views",
     "\\views\\campgrounds",
     "\\views\\comments",
